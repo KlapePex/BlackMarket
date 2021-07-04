@@ -1,0 +1,56 @@
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlackMarket</title>
+    <<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+        <div class="wraper">
+            <div class="sidebar">
+                <h1>Black Market</h1>
+                    <a href="#"> Welcome {{ user.username }}</a>
+                    <a href="{% url 'main' %}">Home</a>
+                    <a href="#About">About Us</a>
+                    <a href="#Contacts">Contacts</a>
+                    <a href="{% url 'logout' %}">Log out</a>
+                    <a href="#">Enter Market</a>
+
+            </div>
+
+
+            <div class="topbar"> Home <form style="display: inline; right: 10px; position: fixed; " > Search <input type="text" id="search"> </form></div>
+            <div class="infobar"> Info Bar</div>
+
+        </div>
+    {% else %}
+        <div class="wraper">
+            <div class="sidebar">
+                <h1>Black Market</h1>
+
+                    <a href="{% url 'main' %}">Home</a>
+                    <a href="#About">About Us</a>
+                    <a href="#Contacts">Contacts</a>
+                    <a href="{% url 'register' %}">Sign Up</a>
+                    <a href="{% url 'login' %}">Sign In</a>
+                    <a href="#SignIn">Enter Market</a>
+
+            </div>
+
+
+            <div class="topbar"> Home <form style="display: inline; right: 10px; position: fixed; " > Search <input type="text" id="search"> </form></div>
+            <div class="infobar"> Info Bar</div>
+
+        </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

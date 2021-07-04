@@ -1,0 +1,9 @@
+body {
+    background: white;
+}
+
+.sidebar {
+    background: black;
+    text-align: center;
+    padding-bottom: 50px;
+}
