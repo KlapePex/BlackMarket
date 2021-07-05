@@ -35,6 +35,6 @@ class RegistrationForm(UserCreationForm):
         saved_user.groups.add(customer_group)
         saved_user.save()
 
-        new_profile = Profile.objects.create(user=saved_user)
+        Profile.objects.create(user=saved_user)
 
         return saved_user
