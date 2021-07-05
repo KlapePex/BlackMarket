@@ -40,10 +40,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-class Category(models.Model):
-    title = models.CharField(max_length=20, null=False)
-
-class SubCategory(models.Model):
-    title = models.CharField(max_length=20, null=False)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
