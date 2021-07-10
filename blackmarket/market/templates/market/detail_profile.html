@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<p>User name: {{profile.user.username}}</p>
+<p>Name: {{profile.user.firstname}}</p>
+
+
+<hr>
+
+<p>Watch list:</p>
+<ul>
+{% for product in profile.watch_list.all %}
+
+    <li>{{product.name}}</li>
+
+{% endfor %}
+
+
+
+
+{% endblock %}

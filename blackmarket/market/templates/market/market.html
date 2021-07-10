@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Market</title>
-</head>
-<body>
+{% extends "market/base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+{% if perms.market.add_product %}
+  Click <a href="{% url 'create_product' %}">here</a> to create a new product
+{% endif %}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+
+        <form method="get">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Product search" name="search">
+    <div class="input-group-append">
+      <button class="btn btn-secondary" type="submit">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+        </form>
+    </div>
+</div>
+
+
+<h2>These are the products we have:</h2>
+
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+
+  {% for product in products %}
+  <div class="col mb-4">
+
+    <div class="card text-center" style="width: 18rem;">
+
+      {% if product.cover %}
+        <img src="{{ product.cover}}" width="300" height=auto class="card-img-top">
+      {% else %}
+        <img src="https://dummyimage.com/200x300/000/fff&text=NO+IMAGE" width="300" height=auto class="card-img-top">
+      {% endif %}
+
+  <div class="card-body">
+    <h5 class="card-title"><a href="{% url 'detail_product' product.id %}"> {{product.name}}</a></h5>
+    <h6 class="card-subtitle mb-2 text-muted"> <i class="bi bi-star-half"></i> {{product.category | default:"No category"}} </h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add to cart</button>
+
+  </div>
+</div>
+  </div>
+  {% endfor %}
+
+
+</div>
+
+Click <a href="{% url 'market' %}">here</a> to see all products
+
+{% endblock %}
