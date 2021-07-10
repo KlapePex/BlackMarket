@@ -15,8 +15,8 @@ class UserRegisterView(CreateView):
 class DeleteProduct(PermissionRequiredMixin, DeleteView):
     template_name = 'delete_product.html'
     model = Product
-    context_object_name = 'product'
-    success_url = reverse_lazy('products')
+    context_object_name = 'products'
+    success_url = reverse_lazy('market')
     permission_required = 'market.delete_product'
 
 def cart(request):
@@ -52,7 +52,7 @@ def main(request):
 class CreateProduct(PermissionRequiredMixin, CreateView):
     template_name = 'market/create_product.html'
     model = Product
-    success_url = reverse_lazy('product')
+    success_url = reverse_lazy('market')
     fields = '__all__'
     permission_required = 'market.add_product'
 
@@ -64,13 +64,13 @@ class DetailProduct(DetailView):
 class UpdateProduct(PermissionRequiredMixin, UpdateView):
     template_name = 'market/update_product.html'
     model = Product
-    success_url = reverse_lazy('product')
+    success_url = reverse_lazy('market')
     fields = '__all__'
-    context_object_name = 'product'
+    context_object_name = 'products'
     permission_required = 'market.change_product'
     
 
 class DetailProfile(DetailView):
     template_name = 'market/detail_profile.html'
     model = Profile
-    context_object_name = 'profile'
+    context_object_name = 'profiles'
