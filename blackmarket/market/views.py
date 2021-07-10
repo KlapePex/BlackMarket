@@ -15,8 +15,8 @@ class UserRegisterView(CreateView):
 class DeleteProduct(PermissionRequiredMixin, DeleteView):
     template_name = 'delete_product.html'
     model = Product
-    context_object_name = 'product'
-    success_url = reverse_lazy('products')
+    context_object_name = 'products'
+    success_url = reverse_lazy('market')
     permission_required = 'market.delete_product'
 
 def cart(request):
@@ -34,11 +34,11 @@ class ProductList(ListView):
     model = Product
     context_object_name = 'products'
     def get_queryset(self):
+
         search = self.request.GET.get('search', None)
 
         if search:
-            queryset = Product.objects.filter(name__contains=search)
-            queryset = Product.objects.filter(Q(name__contains=search) | Q(category__name__contains=search))
+            queryset = Product.objects.filter(Q(name__contains=search) | Q(category__title__contains=search))
         else:
             queryset = Product.objects.all()
 
@@ -52,7 +52,7 @@ def main(request):
 class CreateProduct(PermissionRequiredMixin, CreateView):
     template_name = 'market/create_product.html'
     model = Product
-    success_url = reverse_lazy('product')
+    success_url = reverse_lazy('market')
     fields = '__all__'
     permission_required = 'market.add_product'
 
@@ -64,7 +64,7 @@ class DetailProduct(DetailView):
 class UpdateProduct(PermissionRequiredMixin, UpdateView):
     template_name = 'market/update_product.html'
     model = Product
-    success_url = reverse_lazy('product')
+    success_url = reverse_lazy('market')
     fields = '__all__'
     context_object_name = 'product'
     permission_required = 'market.change_product'
