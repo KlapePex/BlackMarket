@@ -34,11 +34,11 @@ class ProductList(ListView):
     model = Product
     context_object_name = 'products'
     def get_queryset(self):
+
         search = self.request.GET.get('search', None)
 
         if search:
-            queryset = Product.objects.filter(name__contains=search)
-            queryset = Product.objects.filter(Q(name__contains=search) | Q(category__name__contains=search))
+            queryset = Product.objects.filter(Q(name__contains=search) | Q(category__title__contains=search))
         else:
             queryset = Product.objects.all()
 
@@ -66,11 +66,11 @@ class UpdateProduct(PermissionRequiredMixin, UpdateView):
     model = Product
     success_url = reverse_lazy('market')
     fields = '__all__'
-    context_object_name = 'products'
+    context_object_name = 'product'
     permission_required = 'market.change_product'
     
 
 class DetailProfile(DetailView):
     template_name = 'market/detail_profile.html'
     model = Profile
-    context_object_name = 'profiles'
+    context_object_name = 'profile'
