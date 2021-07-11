@@ -4,9 +4,9 @@
     <p> <img src="{{ product.cover}}" width="300" height=auto></p>
 {% endif %}
 <p>Name: {{product.name}}</p>
-<p>Description: {{product.details}}</p>
-<p>Price: {{product.price}} </p>
-<button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add to cart</button>
+<p>Description: {{product.details | safe}}</p>
+<p style="font-weight: 700;">Price: {{product.price}} </p>
+<button data-product={{ product.id }} data-action="add" class="btn btn-success add-btn update-cart">Add To Cart</button>
 
 
 <hr>
