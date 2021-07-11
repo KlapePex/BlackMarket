@@ -5,18 +5,20 @@
 
 <p>User name: {{profile.user.username}}</p>
 <p>Name: {{profile.user.firstname}}</p>
+<p>Name: {{profile.user.lastname}}</p>
 
 
 <hr>
 
-<p>Watch list:</p>
+<p>Cart list:</p>
 <ul>
-{% for product in profile.watch_list.all %}
+{% for product in CartList.objects.all %}
 
     <li>{{product.name}}</li>
 
-{% endfor %}
 
+{% endfor %}
+</ul>
 
 
 
