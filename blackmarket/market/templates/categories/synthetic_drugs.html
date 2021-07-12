@@ -6,30 +6,12 @@
   Click <a href="{% url 'create_product' %}">here</a> to create a new product
 {% endif %}
 
-
-<div class="container">
-    <div class="row justify-content-center">
-
-        <form method="get">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Product search" name="search">
-    <div class="input-group-append">
-      <button class="btn btn-secondary" type="submit">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </div>
-        </form>
-    </div>
-</div>
-
-
 <h2>These are the products we have:</h2>
-
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
   {% for product in products %}
+  {% if product.category == "Synthetic drugs" and product.available == True %}
   <div class="col mb-4">
 
     <div class="card text-center" style="width: 18rem;">
@@ -49,6 +31,7 @@
   </div>
 </div>
   </div>
+  {% endif %}
   {% endfor %}
 
 

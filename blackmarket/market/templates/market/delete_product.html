@@ -1,0 +1,13 @@
+{% extends "market/base.html" %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>Are you sure you want to delete this product?</p>
+
+    <input type="submit" value="Yes, delete it" class="btn btn-danger">
+</form>
+
+{% endblock %}

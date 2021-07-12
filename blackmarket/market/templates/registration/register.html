@@ -1,0 +1,10 @@
+{% extends "market/base.html" %}
+{% block content %}
+<div class="form-group-register">
+    <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary">Register</button>
+    </form>
+</div>
+{% endblock %}

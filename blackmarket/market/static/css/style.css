@@ -1,0 +1,14 @@
+body {
+    background: white;
+}
+
+.sidebar {
+    background: black;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.chg-quantity {
+    height: 25px;
+    width: 25px;
+}

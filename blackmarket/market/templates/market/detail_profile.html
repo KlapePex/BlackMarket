@@ -1,0 +1,25 @@
+{% extends "market/base.html" %}
+
+{% block content %}
+
+
+<p>User name: {{profile.user.username}}</p>
+<p>Name: {{profile.user.firstname}}</p>
+<p>Name: {{profile.user.lastname}}</p>
+
+
+<hr>
+
+<p>Cart list:</p>
+<ul>
+{% for product in CartList.objects.all %}
+
+    <li>{{product.name}}</li>
+
+
+{% endfor %}
+</ul>
+
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "market/base.html" %}
+{% block content %}
+{% if product.cover %}
+    <p> <img src="{{ product.cover}}" width="300" height=auto></p>
+{% endif %}
+<p>Name: {{product.name}}</p>
+<p>Description: {{product.details | safe}}</p>
+<p style="font-weight: 700;">Price: {{product.price}} </p>
+<button data-product={{ product.id }} data-action="add" class="btn btn-success add-btn update-cart">Add To Cart</button>
+
+
+<hr>
+
+{% if perms.market.change_product %}
+    <p>Click <a href="{% url 'update_product' product.id %}">here</a> to update this product</p>
+{% endif %}
+{% if perms.market.delete_product %}
+    <p>Click <a href="{% url 'delete_product' product.id %}">here</a> to delete this product</p>
+{% endif %}
+{% endblock %}

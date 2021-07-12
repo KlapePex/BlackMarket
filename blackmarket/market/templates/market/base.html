@@ -1,0 +1,112 @@
+<html lang="en">
+{% load static %}
+<html {% if LANGUAGE_CODE %}lang="{{ LANGUAGE_CODE }}"{% endif %}>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript">
+    var user = '{{request.user}}'
+
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+  </script>
+
+    <title>BlackMarket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+
+    <<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container fixed">
+        <a class="navbar-brand" href="/">Black Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">
+              Home
+            </a>
+            <div class="nav-item dropdown">
+              <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
+                Market
+              </a>
+              <div class="dropdown-menu dropdown-menu-left">
+                <a class="dropdown-item text-left" href="{% url 'market' %}">All</a>
+                <a class="dropdown-item text-left" href="{% url 'cars' %}">Cars</a>
+                <a class="dropdown-item text-left" href="{% url 'electronics' %}">Electronics</a>
+                <a class="dropdown-item text-left" href="{% url 'guns' %}">Guns</a>
+                <a class="dropdown-item text-left" href="{% url 'melee' %}">Melee</a>
+                <a class="dropdown-item text-left" href="{% url 'natural_drugs' %}">Natural Drugs</a>
+                <a class="dropdown-item text-left" href="{% url 'synthetic_drugs' %}">Synthetic Drugs</a>
+              </div>
+            </div>
+            <a class="nav-item nav-link active" href="/cart">
+              Cart
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-nav ml-auto">
+
+        <div class="nav-item dropdown">
+    {% if user.is_authenticated %}
+      <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
+        {% if user.first_name %}Hello, {{ user.first_name }}!
+        {% else %}Hello, {{ user.username }}!{% endif %}
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        {% if  user.profile %}
+          <a class="dropdown-item text-right" href="{% url 'detail_profile' user.profile.id  %}">Profile</a>
+        {% endif %}
+        <a class="dropdown-item text-right" href="{% url 'logout' %}">Logout</a>
+        <a class="dropdown-item text-right" href="{% url 'password_change' %}">Change password</a>
+      </div>
+    {% else %}
+      <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
+        You are not logged in.
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item text-right" href="{% url 'login' %}">Login</a>
+        <a class="dropdown-item text-right" href="{% url 'register' %}">Sign up</a>
+      </div>
+    {% endif %}
+  </div>
+       </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/market.js' %}"></script>
+  </body>
+</html>
