@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 from .views import UserRegisterView, CreateProduct, UpdateProduct, DetailProduct, DeleteProduct, ProductList, \
     DetailProfile, CarsList, ElectronicsList, GunsList, MeleeList, NaturalDrugsList, SyntheticDrugsList
@@ -21,5 +22,6 @@ urlpatterns = [
     path('melee/', MeleeList.as_view(), name='melee'),
     path('natural_drugs/', NaturalDrugsList.as_view(), name='natural_drugs'),
     path('synthetic_drugs/', SyntheticDrugsList.as_view(), name='synthetic_drugs'),
-    path('update_item/', views.update_item, name="update_item")
+    path('update_item/', views.update_item, name="update_item"),
+    path('process_order/', views.processOrder, name="process_order"),
 ]

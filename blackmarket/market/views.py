@@ -1,12 +1,13 @@
-from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from .forms import RegistrationForm
 from .models import Product, Profile, Order, OrderItem, ShippingAddress
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from . utils import cartData, cookieCart, guestOrder
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+import datetime
 import json
 from django.db.models import Q
 
@@ -153,5 +154,43 @@ def update_item(request):
 
 
 def checkout(request):
-    context = {}
+
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'market/checkout.html', context)
+
+
+@csrf_exempt
+def processOrder(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+    else:
+        customer, order = guestOrder(request, data)
+
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
+
+    if total == order.get_cart_total:
+        order.complete = True
+    order.save()
+
+    if order.shipping:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            county=data['shipping']['county'],
+            zipcode=data['shipping']['zipcode'],
+        )
+
+    return JsonResponse('Payment complete!', safe=False)

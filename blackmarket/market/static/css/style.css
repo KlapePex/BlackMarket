@@ -12,3 +12,10 @@ body {
     height: 25px;
     width: 25px;
 }
+
+.cart-row{
+	display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
